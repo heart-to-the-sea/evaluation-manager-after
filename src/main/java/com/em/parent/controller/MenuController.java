@@ -1,6 +1,8 @@
 package com.em.parent.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.em.parent.common.R;
+import com.em.parent.doman.bo.MenuBo;
 import com.em.parent.doman.vo.MenuVo;
 import com.em.parent.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,11 @@ public class MenuController {
 
     @Autowired
     MenuService menuService;
+
+    @GetMapping("list")
+    public R<Page<MenuVo>> list(MenuBo bo) {
+        return menuService.pageList(bo);
+    }
 
     @GetMapping("treeList")
     public R<List<MenuVo>> treeList() {

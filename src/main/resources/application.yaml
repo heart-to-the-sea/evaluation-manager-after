@@ -12,6 +12,7 @@ spring:
     redis:
       host: 47.93.179.232
       port: 6379
+      database: 0
 
 
 
@@ -22,6 +23,15 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapper/**/*.xml
   type-aliases-package: com.em.parent.entity
+
+sa-token:
+  token-name: satoken
+  active-timeout: -1
+  timeout: 259200
+  is-concurrent: true
+  is-share: false
+  token-style: uuid
+  is-log: true
 
 #easy-trans:
 #  #启用redis缓存 如果不用redis请设置为false

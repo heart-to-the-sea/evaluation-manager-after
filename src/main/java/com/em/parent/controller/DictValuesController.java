@@ -2,6 +2,7 @@ package com.em.parent.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.em.parent.common.R;
+import com.em.parent.doman.bo.DictValuesBo;
 import com.em.parent.doman.vo.DictValuesVo;
 import com.em.parent.service.DictValuesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class DictValuesController {
     DictValuesService dictValuesService;
 
     @GetMapping("list")
-    public R<Page<DictValuesVo>> list(@RequestParam(required = false) Long dictId) {
-        return dictValuesService.pageList(dictId);
+    public R<Page<DictValuesVo>> list(DictValuesBo bo) {
+        return dictValuesService.pageList(bo);
     }
 
     @GetMapping("listByCode")

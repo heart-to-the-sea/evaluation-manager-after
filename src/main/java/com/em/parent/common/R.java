@@ -1,6 +1,5 @@
 package com.em.parent.common;
 
-import lombok.Data;
 
 public class R<T> {
     private RES_CODE code;
@@ -8,11 +7,11 @@ public class R<T> {
     private T data;
 
     public RES_CODE getCode() { return code; }
-    public void setCode(RES_CODE code) { this.code = code; }
+    public R setCode(RES_CODE code) { this.code = code;  return this;}
     public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
+    public R setMessage(String message) { this.message = message; return this; }
     public T getData() { return data; }
-    public void setData(T data) { this.data = data; }
+    public R setData(T data) { this.data = data; return this;}
     public static R<Void> ok() {
         return send(RES_CODE.SUCCESS,"success",null);
     }

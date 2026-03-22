@@ -1,16 +1,18 @@
 package com.em.parent.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.em.parent.common.R;
 import com.em.parent.doman.Dict;
 import com.em.parent.doman.DictValues;
+import com.em.parent.doman.bo.DictValuesBo;
 import com.em.parent.doman.vo.DictValuesVo;
 import com.em.parent.mapper.DictMapper;
 import com.em.parent.mapper.DictValuesMapper;
 import com.em.parent.service.DictValuesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -22,22 +24,30 @@ public class DictValuesServiceImpl implements DictValuesService {
     DictMapper dictMapper;
 
     @Override
-    public R<Page<DictValuesVo>> pageList(Long dictId) {
-        Page<DictValues> page = new Page<>();
-        QueryWrapper<DictValues> wrapper = new QueryWrapper<>();
-        if (dictId != null) {
-            wrapper.eq("dict_id", dictId);
+    public R<Page<DictValuesVo>> pageList(DictValuesBo bo) {
+        Page<DictValues> page = new Page<>(bo.getPageNum(), bo.getPageSize());
+        LambdaQueryWrapper<DictValues> wrapper = new LambdaQueryWrapper<>();
+        if (bo.getDictId() != null) {
+            wrapper.eq(DictValues::getDictId, bo.getDictId());
         }
+        if (StringUtils.hasText(bo.getLabel())) {
+            wrapper.like(DictValues::getLabel, bo.getLabel());
+        }
+        if (StringUtils.hasText(bo.getValue())) {
+            wrapper.like(DictValues::getValue, bo.getValue());
+        }
+        wrapper.orderByDesc(DictValues::getId);
         return R.ok(dictValuesMapper.selectVoPage(page, wrapper));
     }
 
     @Override
     public R<List<DictValuesVo>> listByDictCode(String dictCode) {
-        Dict dict = dictMapper.selectOne(new QueryWrapper<Dict>().eq("code", dictCode));
+        Dict dict = dictMapper.selectOne(new LambdaQueryWrapper<Dict>().eq(Dict::getCode, dictCode));
         if (dict == null) {
             return R.ok(List.of());
         }
-        List<DictValuesVo> list = dictValuesMapper.selectVoList(new QueryWrapper<DictValues>().eq("dict_id", dict.getId()));
+        List<DictValuesVo> list = dictValuesMapper.selectVoList(
+                new LambdaQueryWrapper<DictValues>().eq(DictValues::getDictId, dict.getId()));
         return R.ok(list);
     }
 

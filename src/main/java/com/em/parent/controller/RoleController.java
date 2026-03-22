@@ -1,6 +1,8 @@
 package com.em.parent.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.em.parent.common.R;
+import com.em.parent.doman.bo.RoleBo;
 import com.em.parent.doman.vo.RoleVo;
 import com.em.parent.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,8 @@ public class RoleController {
     RoleService roleService;
 
     @GetMapping("list")
-    public R<List<RoleVo>> list() {
-        return roleService.listAll();
+    public R<Page<RoleVo>> list(RoleBo bo) {
+        return roleService.pageList(bo);
     }
 
     @GetMapping("getById")

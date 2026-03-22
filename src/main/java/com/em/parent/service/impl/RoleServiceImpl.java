@@ -1,10 +1,13 @@
 package com.em.parent.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.em.parent.common.R;
 import com.em.parent.doman.Menu;
 import com.em.parent.doman.Role;
 import com.em.parent.doman.RoleMenu;
+import com.em.parent.doman.bo.RoleBo;
 import com.em.parent.doman.vo.MenuVo;
 import com.em.parent.doman.vo.RoleVo;
 import com.em.parent.mapper.MenuMapper;
@@ -15,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +35,17 @@ public class RoleServiceImpl implements RoleService {
     MenuMapper menuMapper;
 
     @Override
-    public R<List<RoleVo>> listAll() {
-        List<RoleVo> roles = roleMapper.selectVoList(new QueryWrapper<>());
-        for (RoleVo role : roles) {
-            role.setMenus(getMenusByRoleId(role.getId()));
+    public R<Page<RoleVo>> pageList(RoleBo bo) {
+        Page<Role> page = new Page<>(bo.getPageNum(), bo.getPageSize());
+        LambdaQueryWrapper<Role> wrapper = new LambdaQueryWrapper<>();
+        if (StringUtils.hasText(bo.getName())) {
+            wrapper.like(Role::getName, bo.getName());
         }
-        return R.ok(roles);
+        if (StringUtils.hasText(bo.getCode())) {
+            wrapper.like(Role::getCode, bo.getCode());
+        }
+        wrapper.orderByDesc(Role::getId);
+        return R.ok(roleMapper.selectVoPage(page, wrapper));
     }
 
     @Override
@@ -109,7 +118,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public R<List<Long>> getMenuIdsByRoleId(Long roleId) {
-        List<RoleMenu> roleMenus = roleMenuMapper.selectList(new QueryWrapper<RoleMenu>().eq("role_id", roleId));
+
+        List<RoleMenu> roleMenus = roleMenuMapper.selectList(
+                new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, roleId));
         List<Long> menuIds = new ArrayList<>();
         for (RoleMenu rm : roleMenus) {
             menuIds.add(rm.getMenuId());
