@@ -1,5 +1,6 @@
 package com.em.parent.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.em.parent.common.R;
 import com.em.parent.doman.vo.UserVo;
 import com.em.parent.service.UserService;
@@ -18,7 +19,7 @@ public class UserController {
     UserService userService;
 
     @GetMapping("list")
-    public R<List<UserVo>> list() {
+    public R<Page<UserVo>> list() {
         return userService.pageList();
     }
 }

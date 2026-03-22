@@ -20,11 +20,11 @@ public interface BaseMapperPlus<T, V> extends BaseMapper<T> {
         return (Class<V>) ReflectionKit.getSuperClassGenericType(this.getClass(), BaseMapperPlus.class, 1);
     }
 
-    default IPage<V> selectVoPage(IPage<T> page, Wrapper<T> queryWrapper) {
-        IPage<T> entityPage = this.selectPage(page, queryWrapper);
+    default Page<V> selectVoPage(Page<T> page, Wrapper<T> queryWrapper) {
+        Page<T> entityPage = this.selectPage(page, queryWrapper);
         Class<V> VClass = getReturnClass();
 
-        IPage<V> VPage = new Page<>(entityPage.getCurrent(), entityPage.getSize(), entityPage.getTotal());
+        Page<V> VPage = new Page<>(entityPage.getCurrent(), entityPage.getSize(), entityPage.getTotal());
 
         List<V> VList = entityPage.getRecords().stream()
                 .map(entity -> BeanUtil.toBean(entity, VClass))
@@ -34,7 +34,7 @@ public interface BaseMapperPlus<T, V> extends BaseMapper<T> {
         return VPage;
     }
 
-    default V selectV(Wrapper<T> queryWrapper) {
+    default V selectVo(Wrapper<T> queryWrapper) {
         T entity = this.selectOne(queryWrapper);
         if (entity == null) return null;
         return BeanUtil.toBean(entity, getReturnClass());

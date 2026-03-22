@@ -1,6 +1,9 @@
 package com.em.parent.doman.vo;
 
+import com.em.parent.doman.User;
 import lombok.Data;
+//import org.dromara.core.trans.anno.Trans;
+//import org.dromara.core.trans.constant.TransType;
 
 @Data
 public class UserVo {
@@ -10,4 +13,5 @@ public class UserVo {
     private String username;
     private String disableFlag;
     private String delFlag;
+    private String delFlagLabel;
 }

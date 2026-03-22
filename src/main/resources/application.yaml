@@ -3,9 +3,18 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.22.201:3308/em_db
+#    url: jdbc:mysql://192.168.22.201:3308/em_db
+    url: jdbc:mysql://47.93.179.232:3308/em_db
     username: root
-    password: Bi3Zkyey8DPF
+#    password: Bi3Zkyey8DPF
+    password: 123456
+  data:
+    redis:
+      host: 47.93.179.232
+      port: 6379
+
+
+
 
 mybatis-plus:
   configuration:
@@ -13,3 +22,17 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapper/**/*.xml
   type-aliases-package: com.em.parent.entity
+
+#easy-trans:
+#  #启用redis缓存 如果不用redis请设置为false
+#  is-enable-redis: false
+#  #启用全局翻译(拦截所有responseBody进行自动翻译)，如果关闭需要手动调用翻译方法或者方法加注解，具体看文档
+#  is-enable-global: true
+#  #启用平铺模式
+#  is-enable-tile: true
+#  #字典缓存放到redis 微服务模式请开启
+#  dict-use-redis: false
+#  # ruoyi相关的请开启
+#  is-enable-map-result: true
+#  # MP为 3.5.3.2版本以上的3.x 版本请设置为true，否则可能会出现找不到对应方法的问题
+#  mp-new: false
