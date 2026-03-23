@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.em.parent.common.R;
 import com.em.parent.doman.User;
 import com.em.parent.mapper.UserMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,10 +19,13 @@ import java.util.Objects;
 @RestController
 @RequestMapping("auth")
 @RequiredArgsConstructor
+@Tag(name = "认证管理")
 public class AuthController {
     private final UserMapper userMapper;
+    
     @PostMapping("/login")
-    public R<Void> login(@RequestBody  User user){
+    @Operation(summary = "用户登录")
+    public R<Void> login(@RequestBody User user){
         if(Objects.isNull(user)) {
             return R.fail().setMessage("登陆失败");
         }
