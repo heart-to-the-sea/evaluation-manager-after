@@ -8,4 +8,5 @@ import lombok.EqualsAndHashCode;
 public class UserBo extends PageBo {
     private String account;
     private String username;
+    private String password;
 }
