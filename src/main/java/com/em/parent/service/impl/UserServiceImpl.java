@@ -32,28 +32,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public R<UserVo> getById(Long id) {
+    public R<UserVo> getById(String id) {
         return R.ok(userMapper.selectVo(new LambdaQueryWrapper<User>().eq(User::getId, id)));
     }
 
     @Override
-    public R<Void> add(UserVo userVo) {
+    public R<Void> add(UserBo bo) {
         User user = new User();
-        BeanUtils.copyProperties(userVo, user);
+        BeanUtils.copyProperties(bo, user);
         userMapper.insert(user);
         return R.ok();
     }
 
     @Override
-    public R<Void> update(UserVo userVo) {
+    public R<Void> update(UserBo bo) {
         User user = new User();
-        BeanUtils.copyProperties(userVo, user);
+        BeanUtils.copyProperties(bo, user);
         userMapper.updateById(user);
         return R.ok();
     }
 
     @Override
-    public R<Void> delete(Long id) {
+    public R<Void> delete(String id) {
         userMapper.deleteById(id);
         return R.ok();
     }

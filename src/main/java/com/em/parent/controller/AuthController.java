@@ -26,4 +26,17 @@ public class AuthController {
     public R<?> getAuthInfo(){
         return authService.getAuthInfo();
     }
+
+    @GetMapping("getConstantRoutes")
+    @Operation(summary = "获取通用菜单")
+    public R<?> getConstantRoutes() {
+        return authService.getConstantRoutes();
+    }
+
+    @GetMapping("getUserRoutes")
+    @Operation(summary = "获取权限菜单")
+    public R<?>
+    getUserRoutes() {
+        return authService.getUserRoutes();
+    }
 }

@@ -5,10 +5,8 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://192.168.22.201:3308/em_db
     url: jdbc:mysql://47.93.179.232:3308/em_db
     username: root
-#    password: Bi3Zkyey8DPF
     password: 123456
   data:
     redis:

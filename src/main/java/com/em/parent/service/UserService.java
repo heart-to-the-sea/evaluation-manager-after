@@ -7,8 +7,8 @@ import com.em.parent.doman.vo.UserVo;
 
 public interface UserService {
     R<Page<UserVo>> pageList(UserBo bo);
-    R<UserVo> getById(Long id);
-    R<Void> add(UserVo userVo);
-    R<Void> update(UserVo userVo);
-    R<Void> delete(Long id);
+    R<UserVo> getById(String id);
+    R<Void> add(UserBo bo);
+    R<Void> update(UserBo bo);
+    R<Void> delete(String id);
 }

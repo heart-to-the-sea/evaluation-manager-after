@@ -10,8 +10,8 @@ import java.util.List;
 public interface MenuService {
     R<Page<MenuVo>> pageList(MenuBo bo);
     R<List<MenuVo>> treeList();
-    R<MenuVo> getById(Long id);
-    R<Void> add(MenuVo menuVo);
-    R<Void> update(MenuVo menuVo);
-    R<Void> delete(Long id);
+    R<MenuVo> getById(String id);
+    R<Void> add(MenuBo bo);
+    R<Void> update(MenuBo bo);
+    R<Void> delete(String id);
 }

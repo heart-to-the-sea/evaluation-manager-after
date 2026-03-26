@@ -10,6 +10,7 @@ import com.em.parent.doman.vo.DictValuesVo;
 import com.em.parent.mapper.DictMapper;
 import com.em.parent.mapper.DictValuesMapper;
 import com.em.parent.service.DictValuesService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -52,26 +53,17 @@ public class DictValuesServiceImpl implements DictValuesService {
     }
 
     @Override
-    public R<Void> add(DictValuesVo dictValuesVo) {
+    public R<Void> add(DictValuesBo bo) {
         DictValues dictValues = new DictValues();
-        dictValues.setDictId(dictValuesVo.getDictId());
-        dictValues.setLabel(dictValuesVo.getLabel());
-        dictValues.setValue(dictValuesVo.getValue());
-        dictValues.setSort(dictValuesVo.getSort());
-        dictValues.setStatus(dictValuesVo.getStatus());
+        BeanUtils.copyProperties(bo, dictValues);
         dictValuesMapper.insert(dictValues);
         return R.ok();
     }
 
     @Override
-    public R<Void> update(DictValuesVo dictValuesVo) {
+    public R<Void> update(DictValuesBo bo) {
         DictValues dictValues = new DictValues();
-        dictValues.setId(dictValuesVo.getId());
-        dictValues.setDictId(dictValuesVo.getDictId());
-        dictValues.setLabel(dictValuesVo.getLabel());
-        dictValues.setValue(dictValuesVo.getValue());
-        dictValues.setSort(dictValuesVo.getSort());
-        dictValues.setStatus(dictValuesVo.getStatus());
+        BeanUtils.copyProperties(bo, dictValues);
         dictValuesMapper.updateById(dictValues);
         return R.ok();
     }

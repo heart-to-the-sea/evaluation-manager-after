@@ -27,25 +27,25 @@ public class UserController {
 
     @GetMapping("getById")
     @Operation(summary = "根据ID获取用户")
-    public R<UserVo> getById(@Parameter(description = "用户ID") @RequestParam Long id) {
+    public R<UserVo> getById(@Parameter(description = "用户ID") @RequestParam String id) {
         return userService.getById(id);
     }
 
     @PostMapping("add")
     @Operation(summary = "新增用户")
-    public R<Void> add(@RequestBody UserVo userVo) {
-        return userService.add(userVo);
+    public R<Void> add(@RequestBody UserBo bo) {
+        return userService.add(bo);
     }
 
     @PutMapping("update")
     @Operation(summary = "更新用户")
-    public R<Void> update(@RequestBody UserVo userVo) {
-        return userService.update(userVo);
+    public R<Void> update(@RequestBody UserBo bo) {
+        return userService.update(bo);
     }
 
     @DeleteMapping("delete")
     @Operation(summary = "删除用户")
-    public R<Void> delete(@Parameter(description = "用户ID") @RequestParam Long id) {
+    public R<Void> delete(@Parameter(description = "用户ID") @RequestParam String id) {
         return userService.delete(id);
     }
 }

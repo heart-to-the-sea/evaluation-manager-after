@@ -49,7 +49,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public R<RoleVo> getById(Long id) {
+    public R<RoleVo> getById(String id) {
         RoleVo roleVo = roleMapper.selectVo(new QueryWrapper<Role>().eq("id", id));
         if (roleVo != null) {
             roleVo.setMenus(getMenusByRoleId(id));
@@ -57,57 +57,57 @@ public class RoleServiceImpl implements RoleService {
         return R.ok(roleVo);
     }
 
-    private List<MenuVo> getMenusByRoleId(Long roleId) {
+    private List<MenuVo> getMenusByRoleId(String roleId) {
         List<RoleMenu> roleMenus = roleMenuMapper.selectList(new QueryWrapper<RoleMenu>().eq("role_id", roleId));
         if (roleMenus.isEmpty()) {
             return new ArrayList<>();
         }
-        List<Long> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
+        List<String> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
         List<MenuVo> allMenus = menuMapper.selectVoList(new QueryWrapper<Menu>().in("id", menuIds));
         return buildTree(allMenus);
     }
 
     private List<MenuVo> buildTree(List<MenuVo> menus) {
-        Map<Long, List<MenuVo>> groupByParent = menus.stream()
+        Map<String, List<MenuVo>> groupByParent = menus.stream()
                 .collect(Collectors.groupingBy(MenuVo::getParentId));
-        List<MenuVo> roots = groupByParent.getOrDefault(0L, new ArrayList<>());
+        List<MenuVo> roots = groupByParent.getOrDefault("0", new ArrayList<>());
         roots.forEach(root -> buildChildren(root, groupByParent));
         return roots;
     }
 
-    private void buildChildren(MenuVo parent, Map<Long, List<MenuVo>> groupByParent) {
+    private void buildChildren(MenuVo parent, Map<String, List<MenuVo>> groupByParent) {
         List<MenuVo> children = groupByParent.getOrDefault(parent.getId(), new ArrayList<>());
         parent.setChildren(children);
         children.forEach(child -> buildChildren(child, groupByParent));
     }
 
     @Override
-    public R<Void> add(RoleVo roleVo) {
+    public R<Void> add(RoleBo bo) {
         Role role = new Role();
-        BeanUtils.copyProperties(roleVo, role);
+        BeanUtils.copyProperties(bo, role);
         roleMapper.insert(role);
         return R.ok();
     }
 
     @Override
-    public R<Void> update(RoleVo roleVo) {
+    public R<Void> update(RoleBo bo) {
         Role role = new Role();
-        BeanUtils.copyProperties(roleVo, role);
+        BeanUtils.copyProperties(bo, role);
         roleMapper.updateById(role);
         return R.ok();
     }
 
     @Override
-    public R<Void> delete(Long id) {
+    public R<Void> delete(String id) {
         roleMapper.deleteById(id);
         return R.ok();
     }
 
     @Override
     @Transactional
-    public R<Void> assignMenus(Long roleId, List<Long> menuIds) {
+    public R<Void> assignMenus(String roleId, List<String> menuIds) {
         roleMenuMapper.delete(new QueryWrapper<RoleMenu>().eq("role_id", roleId));
-        for (Long menuId : menuIds) {
+        for (String menuId : menuIds) {
             RoleMenu rm = new RoleMenu();
             rm.setRoleId(roleId);
             rm.setMenuId(menuId);
@@ -117,11 +117,10 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public R<List<Long>> getMenuIdsByRoleId(Long roleId) {
-
+    public R<List<String>> getMenuIdsByRoleId(String roleId) {
         List<RoleMenu> roleMenus = roleMenuMapper.selectList(
                 new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, roleId));
-        List<Long> menuIds = new ArrayList<>();
+        List<String> menuIds = new ArrayList<>();
         for (RoleMenu rm : roleMenus) {
             menuIds.add(rm.getMenuId());
         }

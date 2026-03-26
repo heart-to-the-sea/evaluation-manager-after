@@ -10,7 +10,7 @@ import java.util.List;
 public interface DictValuesService {
     R<Page<DictValuesVo>> pageList(DictValuesBo bo);
     R<List<DictValuesVo>> listByDictCode(String dictCode);
-    R<Void> add(DictValuesVo dictValuesVo);
-    R<Void> update(DictValuesVo dictValuesVo);
+    R<Void> add(DictValuesBo bo);
+    R<Void> update(DictValuesBo bo);
     R<Void> delete(Long id);
 }

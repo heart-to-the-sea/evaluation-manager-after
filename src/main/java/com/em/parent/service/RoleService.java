@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface RoleService {
     R<Page<RoleVo>> pageList(RoleBo bo);
-    R<RoleVo> getById(Long id);
-    R<Void> add(RoleVo roleVo);
-    R<Void> update(RoleVo roleVo);
-    R<Void> delete(Long id);
-    R<Void> assignMenus(Long roleId, List<Long> menuIds);
-    R<List<Long>> getMenuIdsByRoleId(Long roleId);
+    R<RoleVo> getById(String id);
+    R<Void> add(RoleBo bo);
+    R<Void> update(RoleBo bo);
+    R<Void> delete(String id);
+    R<Void> assignMenus(String roleId, List<String> menuIds);
+    R<List<String>> getMenuIdsByRoleId(String roleId);
 }

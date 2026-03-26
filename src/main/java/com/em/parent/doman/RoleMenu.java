@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 @TableName("role_menu")
 @Data
 public class RoleMenu {
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @TableId(type = IdType.ASSIGN_ID)
+    private String id;
 
-    private Long roleId;
-    private Long menuId;
+    private String roleId;
+    private String menuId;
     private LocalDateTime createdAt;
 }

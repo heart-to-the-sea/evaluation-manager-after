@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 public class RoleVo {
-    private Long id;
+    private String id;
     private String name;
     private String code;
     private String description;

@@ -29,37 +29,37 @@ public class RoleController {
 
     @GetMapping("getById")
     @Operation(summary = "根据ID获取角色")
-    public R<RoleVo> getById(@Parameter(description = "角色ID") @RequestParam Long id) {
+    public R<RoleVo> getById(@Parameter(description = "角色ID") @RequestParam String id) {
         return roleService.getById(id);
     }
 
     @PostMapping("add")
     @Operation(summary = "新增角色")
-    public R<Void> add(@RequestBody RoleVo roleVo) {
-        return roleService.add(roleVo);
+    public R<Void> add(@RequestBody RoleBo bo) {
+        return roleService.add(bo);
     }
 
     @PutMapping("update")
     @Operation(summary = "更新角色")
-    public R<Void> update(@RequestBody RoleVo roleVo) {
-        return roleService.update(roleVo);
+    public R<Void> update(@RequestBody RoleBo bo) {
+        return roleService.update(bo);
     }
 
     @DeleteMapping("delete")
     @Operation(summary = "删除角色")
-    public R<Void> delete(@Parameter(description = "角色ID") @RequestParam Long id) {
+    public R<Void> delete(@Parameter(description = "角色ID") @RequestParam String id) {
         return roleService.delete(id);
     }
 
     @PostMapping("assignMenus")
     @Operation(summary = "分配菜单")
-    public R<Void> assignMenus(@Parameter(description = "角色ID") @RequestParam Long roleId, @RequestBody List<Long> menuIds) {
+    public R<Void> assignMenus(@Parameter(description = "角色ID") @RequestParam String roleId, @RequestBody List<String> menuIds) {
         return roleService.assignMenus(roleId, menuIds);
     }
 
     @GetMapping("getMenuIds")
     @Operation(summary = "获取角色菜单ID列表")
-    public R<List<Long>> getMenuIds(@Parameter(description = "角色ID") @RequestParam Long roleId) {
+    public R<List<String>> getMenuIds(@Parameter(description = "角色ID") @RequestParam String roleId) {
         return roleService.getMenuIdsByRoleId(roleId);
     }
 }

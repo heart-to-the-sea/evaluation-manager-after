@@ -27,16 +27,12 @@ public class MenuServiceImpl implements MenuService {
     public R<Page<MenuVo>> pageList(MenuBo bo) {
         Page<Menu> page = new Page<>(bo.getPageNum(), bo.getPageSize());
         LambdaQueryWrapper<Menu> wrapper = new LambdaQueryWrapper<>();
-        if (StringUtils.hasText(bo.getName())) {
-            wrapper.like(Menu::getName, bo.getName());
+        if (StringUtils.hasText(bo.getLabel())) {
+            wrapper.like(Menu::getLabel, bo.getLabel());
         }
-        if (StringUtils.hasText(bo.getPath())) {
-            wrapper.like(Menu::getPath, bo.getPath());
+        if (StringUtils.hasText(bo.getRoutePath())) {
+            wrapper.like(Menu::getRoutePath, bo.getRoutePath());
         }
-        if (StringUtils.hasText(bo.getType())) {
-            wrapper.eq(Menu::getType, bo.getType());
-        }
-        wrapper.orderByDesc(Menu::getId);
         return R.ok(menuMapper.selectVoPage(page, wrapper));
     }
 
@@ -48,41 +44,41 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public R<MenuVo> getById(Long id) {
+    public R<MenuVo> getById(String id) {
         return R.ok(menuMapper.selectVo(new LambdaQueryWrapper<Menu>().eq(Menu::getId, id)));
     }
 
     @Override
-    public R<Void> add(MenuVo menuVo) {
+    public R<Void> add(MenuBo bo) {
         Menu menu = new Menu();
-        BeanUtils.copyProperties(menuVo, menu);
+        BeanUtils.copyProperties(bo, menu);
         menuMapper.insert(menu);
         return R.ok();
     }
 
     @Override
-    public R<Void> update(MenuVo menuVo) {
+    public R<Void> update(MenuBo bo) {
         Menu menu = new Menu();
-        BeanUtils.copyProperties(menuVo, menu);
+        BeanUtils.copyProperties(bo, menu);
         menuMapper.updateById(menu);
         return R.ok();
     }
 
     @Override
-    public R<Void> delete(Long id) {
+    public R<Void> delete(String id) {
         menuMapper.deleteById(id);
         return R.ok();
     }
 
     private List<MenuVo> buildTree(List<MenuVo> menus) {
-        Map<Long, List<MenuVo>> groupByParent = menus.stream()
+        Map<String, List<MenuVo>> groupByParent = menus.stream()
                 .collect(Collectors.groupingBy(MenuVo::getParentId));
-        List<MenuVo> roots = groupByParent.getOrDefault(0L, new ArrayList<>());
+        List<MenuVo> roots = groupByParent.getOrDefault("0", new ArrayList<>());
         roots.forEach(root -> buildChildren(root, groupByParent));
         return roots;
     }
 
-    private void buildChildren(MenuVo parent, Map<Long, List<MenuVo>> groupByParent) {
+    private void buildChildren(MenuVo parent, Map<String, List<MenuVo>> groupByParent) {
         List<MenuVo> children = groupByParent.getOrDefault(parent.getId(), new ArrayList<>());
         parent.setChildren(children);
         children.forEach(child -> buildChildren(child, groupByParent));

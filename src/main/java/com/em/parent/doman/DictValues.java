@@ -13,7 +13,7 @@ public class DictValues {
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
-    private Long dictId;
+    private String dictId;
     private String dictKey;
     private String label;
     private String value;

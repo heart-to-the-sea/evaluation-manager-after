@@ -5,22 +5,21 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @TableName("menu")
 @Data
 public class Menu {
     @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
+    private String id;
 
-    private Long parentId;
-    private String name;
-    private String path;
-    private String type;
-    private String icon;
-    private Integer sort;
-    private String permission;
-    private Integer status;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String parentId;
+
+    private String key;
+
+    private String label;
+
+    private String i18nKey;
+
+    private String routeKey;
+
+    private String routePath;
 }

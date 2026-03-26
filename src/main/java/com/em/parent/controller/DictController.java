@@ -27,19 +27,19 @@ public class DictController {
 
     @PostMapping("add")
     @Operation(summary = "新增字典")
-    public R<Void> add(@RequestBody DictVo dictVo) {
-        return dictService.add(dictVo);
+    public R<Void> add(@RequestBody DictBo bo) {
+        return dictService.add(bo);
     }
 
     @PutMapping("update")
     @Operation(summary = "更新字典")
-    public R<Void> update(@RequestBody DictVo dictVo) {
-        return dictService.update(dictVo);
+    public R<Void> update(@RequestBody DictBo bo) {
+        return dictService.update(bo);
     }
 
     @DeleteMapping("delete")
     @Operation(summary = "删除字典")
-    public R<Void> delete(@Parameter(description = "字典ID") @RequestParam Long id) {
+    public R<Void> delete(@Parameter(description = "字典ID") @RequestParam String id) {
         return dictService.delete(id);
     }
 }

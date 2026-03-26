@@ -35,14 +35,14 @@ public class DictValuesController {
 
     @PostMapping("add")
     @Operation(summary = "新增字典值")
-    public R<Void> add(@RequestBody DictValuesVo dictValuesVo) {
-        return dictValuesService.add(dictValuesVo);
+    public R<Void> add(@RequestBody DictValuesBo bo) {
+        return dictValuesService.add(bo);
     }
 
     @PutMapping("update")
     @Operation(summary = "更新字典值")
-    public R<Void> update(@RequestBody DictValuesVo dictValuesVo) {
-        return dictValuesService.update(dictValuesVo);
+    public R<Void> update(@RequestBody DictValuesBo bo) {
+        return dictValuesService.update(bo);
     }
 
     @DeleteMapping("delete")

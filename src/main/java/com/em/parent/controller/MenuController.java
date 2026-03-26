@@ -35,25 +35,25 @@ public class MenuController {
 
     @GetMapping("getById")
     @Operation(summary = "根据ID获取菜单")
-    public R<MenuVo> getById(@Parameter(description = "菜单ID") @RequestParam Long id) {
+    public R<MenuVo> getById(@Parameter(description = "菜单ID") @RequestParam String id) {
         return menuService.getById(id);
     }
 
     @PostMapping("add")
     @Operation(summary = "新增菜单")
-    public R<Void> add(@RequestBody MenuVo menuVo) {
-        return menuService.add(menuVo);
+    public R<Void> add(@RequestBody MenuBo bo) {
+        return menuService.add(bo);
     }
 
     @PutMapping("update")
     @Operation(summary = "更新菜单")
-    public R<Void> update(@RequestBody MenuVo menuVo) {
-        return menuService.update(menuVo);
+    public R<Void> update(@RequestBody MenuBo bo) {
+        return menuService.update(bo);
     }
 
     @DeleteMapping("delete")
     @Operation(summary = "删除菜单")
-    public R<Void> delete(@Parameter(description = "菜单ID") @RequestParam Long id) {
+    public R<Void> delete(@Parameter(description = "菜单ID") @RequestParam String id) {
         return menuService.delete(id);
     }
 }

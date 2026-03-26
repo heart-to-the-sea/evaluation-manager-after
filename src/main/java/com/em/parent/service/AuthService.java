@@ -11,4 +11,7 @@ public interface AuthService {
     R<Void> logout();
     R<AuthVo> refresh();
     R<Map<String,Object>> getAuthInfo();
+    R<?> getConstantRoutes();
+    R<?> getUserRoutes();
+
 }

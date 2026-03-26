@@ -6,19 +6,20 @@ import com.em.parent.common.R;
 import com.em.parent.doman.User;
 import com.em.parent.doman.bo.UserBo;
 import com.em.parent.doman.vo.AuthVo;
+import com.em.parent.doman.vo.MenuVo;
 import com.em.parent.mapper.UserMapper;
 import com.em.parent.service.AuthService;
+import com.em.parent.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
     private final UserMapper userMapper;
+    private final MenuService menuService;
     @Override
     public R<AuthVo> login(UserBo userBo) {
 
@@ -60,5 +61,23 @@ public class AuthServiceImpl implements AuthService {
         map.put("userId", "1");
         map.put("username", "amdin");
         return R.ok(map);
+    }
+
+    @Override
+    public R<?> getConstantRoutes() {
+        R<List<MenuVo>> listR = menuService.treeList();
+        Map<String,Object> map= new HashMap<>();
+        map.put("home","home");
+        map.put("routes",new LinkedList<>());
+        return listR;
+    }
+    @Override
+    public R<?> getUserRoutes() {
+        R<List<MenuVo>> listR = menuService.treeList();
+        Map<String,Object> map= new HashMap<>();
+        map.put("home","home");
+        map.put("routes",listR.getData());
+
+        return listR;
     }
 }

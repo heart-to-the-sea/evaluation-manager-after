@@ -7,7 +7,7 @@ import com.em.parent.doman.vo.DictVo;
 
 public interface DictService {
     R<Page<DictVo>> pageList(DictBo bo);
-    R<Void> add(DictVo dictVo);
-    R<Void> update(DictVo dictVo);
-    R<Void> delete(Long id);
+    R<Void> add(DictBo bo);
+    R<Void> update(DictBo bo);
+    R<Void> delete(String id);
 }
