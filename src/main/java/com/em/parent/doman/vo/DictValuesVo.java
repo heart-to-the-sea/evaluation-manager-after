@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 
 @Data
 public class DictValuesVo {
-    private Long id;
-    private Long dictId;
+    private String id;
+    private String dictId;
     private String dictKey;
     private String label;
     private String value;
